@@ -1,0 +1,3 @@
+[submodule ".github/skills"]
+	path = .github/skills
+	url = https://github.com/Restart-Game-Lab/copilot-skills.git

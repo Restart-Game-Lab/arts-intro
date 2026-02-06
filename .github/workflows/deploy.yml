@@ -1,0 +1,72 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+# 防止并发部署冲突
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SSH_TARGET: ${{ secrets.SSH_TARGET }}
+      SSH_REMOTE_PATH: ${{ secrets.SSH_REMOTE_PATH }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Server
+        run: |
+          # 解析 SSH_TARGET (格式支持 host 或 host:port)
+          IFS=':' read -ra ADDR <<< "$SSH_TARGET"
+          HOST=${ADDR[0]}
+          PORT=${ADDR[1]:-22}
+
+          echo "Target: $HOST:$PORT"
+          echo "User: $SSH_USER"
+          echo "Path: $SSH_REMOTE_PATH"
+
+          # 添加 Host Key (避免交互式确认)
+          ssh-keyscan -p $PORT -H $HOST >> ~/.ssh/known_hosts 2>/dev/null || true
+
+          # 定义通用 SSH 选项 (注意: agent 已处理身份验证，无需指定 -i)
+          SSH_OPTS="-o StrictHostKeyChecking=no -p $PORT"
+
+          # 1. 清理远端目录
+          ssh $SSH_OPTS $SSH_USER@$HOST "rm -rf $SSH_REMOTE_PATH/*"
+
+          # 2. 上传文件 (scp 使用大写 -P 指定端口)
+          scp -o StrictHostKeyChecking=no -P $PORT -r -p -C ./dist/* $SSH_USER@$HOST:$SSH_REMOTE_PATH
+
+          # 3. 调整远端权限
+          ssh $SSH_OPTS $SSH_USER@$HOST "chown -R 1000:1000 $SSH_REMOTE_PATH/*"
+
+          echo "部署完成。"

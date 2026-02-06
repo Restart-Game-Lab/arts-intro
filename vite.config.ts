@@ -41,6 +41,7 @@ export default defineConfig({
     },
   },
   server: {
+    open: false,
     https: {
       key: fs.readFileSync('./cert/server.key'),
       cert: fs.readFileSync('./cert/fullchain.crt'),

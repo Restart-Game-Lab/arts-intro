@@ -22,7 +22,7 @@ usePageTitle('首页', appName)
         <StudioLogo class="studio-logo" />
 
         <div class="slogan-container">
-          <p class="slogan-text">重启，是探索未知的开始。</p>
+          <p class="slogan-text">为了我们的幻想乡</p>
         </div>
       </div>
     </mdui-layout-main>

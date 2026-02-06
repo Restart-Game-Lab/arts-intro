@@ -60,13 +60,36 @@ jobs:
           # 定义通用 SSH 选项 (注意: agent 已处理身份验证，无需指定 -i)
           SSH_OPTS="-o StrictHostKeyChecking=no -p $PORT"
 
-          # 1. 清理远端目录
-          ssh $SSH_OPTS $SSH_USER@$HOST "rm -rf $SSH_REMOTE_PATH/*"
+          # 1. 获取本地 dist/ 目录的文件列表（相对路径）
+          echo "获取本地文件列表..."
+          LOCAL_FILES=$(find dist -type f -print | sed 's|^dist/||' | sort)
 
-          # 2. 上传文件 (scp 使用大写 -P 指定端口)
+          # 2. 获取远程目录的文件列表（相对路径）
+          echo "获取远程文件列表..."
+          REMOTE_FILES=$(ssh $SSH_OPTS $SSH_USER@$HOST "find $SSH_REMOTE_PATH -type f -print 2>/dev/null | sed 's|^$SSH_REMOTE_PATH/||' | sort" || echo "")
+
+          # 3. 计算需要删除的文件（远程有，本地没有）
+          echo "计算需要删除的文件..."
+          FILES_TO_DELETE=$(comm -23 <(echo "$REMOTE_FILES") <(echo "$LOCAL_FILES"))
+
+          if [ -n "$FILES_TO_DELETE" ]; then
+            echo "需要删除的文件："
+            echo "$FILES_TO_DELETE"
+          else
+            echo "没有需要删除的文件。"
+          fi
+
+          # 4. 上传文件 (scp 使用大写 -P 指定端口，会覆盖同名文件)
+          echo "上传文件..."
           scp -o StrictHostKeyChecking=no -P $PORT -r -p -C ./dist/* $SSH_USER@$HOST:$SSH_REMOTE_PATH
 
-          # 3. 调整远端权限
+          # 5. 删除旧文件
+          if [ -n "$FILES_TO_DELETE" ]; then
+            echo "删除旧文件..."
+            echo "$FILES_TO_DELETE" | xargs -I {} ssh $SSH_OPTS $SSH_USER@$HOST "rm -f $SSH_REMOTE_PATH/{}"
+          fi
+
+          # 6. 调整远端权限
           ssh $SSH_OPTS $SSH_USER@$HOST "chown -R 1000:1000 $SSH_REMOTE_PATH/*"
 
           echo "部署完成。"

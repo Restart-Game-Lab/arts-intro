@@ -18,7 +18,7 @@ const { themeIcon, toggleTheme } = useTheme()
         <div style="flex-grow: 1"></div>
 
         <mdui-tooltip content="用户中心">
-            <mdui-button-icon href="/user">
+            <mdui-button-icon href="https://babel.restart.org.cn">
                 <mdui-icon-account-circle></mdui-icon-account-circle>
             </mdui-button-icon>
         </mdui-tooltip>

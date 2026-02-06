@@ -23,39 +23,75 @@ const navigate = (to: string, event: MouseEvent) => {
 </script>
 
 <template>
-    <mdui-top-app-bar>
-        <mdui-top-app-bar-title class="logo-title" @click="navigate('/', $event)">
-            {{ props.title }}
-        </mdui-top-app-bar-title>
+    <mdui-top-app-bar class="header">
+        <div class="header-layout">
+            <div class="header-left">
+                <mdui-top-app-bar-title class="logo-title" @click="navigate('/', $event)">
+                    {{ props.title }}
+                </mdui-top-app-bar-title>
+                <div class="nav-links">
+                    <mdui-button variant="text" @click="navigate('/projects', $event)">项目</mdui-button>
+                    <mdui-button variant="text" @click="navigate('/gadgets', $event)">应用</mdui-button>
+                    <mdui-button variant="text" @click="navigate('/labmem', $event)">成员</mdui-button>
+                    <mdui-button variant="text" @click="navigate('/about', $event)">关于</mdui-button>
+                </div>
+            </div>
 
-        <div class="nav-links">
-            <mdui-button variant="text" @click="navigate('/projects', $event)">项目</mdui-button>
-            <mdui-button variant="text" @click="navigate('/gadgets', $event)">应用</mdui-button>
-            <mdui-button variant="text" @click="navigate('/labmem', $event)">成员</mdui-button>
-            <mdui-button variant="text" @click="navigate('/about', $event)">关于</mdui-button>
+            <div class="header-center">
+                <!-- Reserved for future use -->
+            </div>
+
+            <div class="header-right">
+                <mdui-tooltip content="用户中心">
+                    <mdui-button-icon href="https://babel.restart.org.cn">
+                        <mdui-icon-account-circle></mdui-icon-account-circle>
+                    </mdui-button-icon>
+                </mdui-tooltip>
+
+                <mdui-tooltip :content="`切换主题`">
+                    <mdui-button-icon @click="toggleTheme">
+                        <component :is="`mdui-icon-${themeIcon}`"></component>
+                    </mdui-button-icon>
+                </mdui-tooltip>
+            </div>
         </div>
-
-        <div style="flex-grow: 1"></div>
-
-        <mdui-tooltip content="用户中心">
-            <mdui-button-icon href="https://babel.restart.org.cn">
-                <mdui-icon-account-circle></mdui-icon-account-circle>
-            </mdui-button-icon>
-        </mdui-tooltip>
-
-        <mdui-tooltip :content="`切换主题`">
-            <mdui-button-icon @click="toggleTheme">
-                <component :is="`mdui-icon-${themeIcon}`"></component>
-            </mdui-button-icon>
-        </mdui-tooltip>
     </mdui-top-app-bar>
 </template>
 
 <style scoped>
-mdui-top-app-bar {
+.header {
     --mdui-color-surface: transparent;
     padding-left: 2rem;
     padding-right: 2rem;
+}
+
+.header-layout {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+}
+
+.header-left,
+.header-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.header-left {
+    left: 0;
+    justify-content: flex-start;
+}
+
+.header-right {
+    right: 0;
+    justify-content: flex-end;
 }
 
 .logo-title {
@@ -63,6 +99,8 @@ mdui-top-app-bar {
     margin-right: 1.5rem;
     flex-grow: 0;
     min-width: auto;
+    /* Reset mdui-top-app-bar-title default styling if necessary */
+    padding-left: 0;
 }
 
 .nav-links {

@@ -65,8 +65,9 @@ jobs:
           LOCAL_FILES=$(find dist -type f -print | sed 's|^dist/||' | sort)
 
           # 2. 获取远程目录的文件列表（相对路径）
+          # 注意：将 sort 移至本地执行，确保与 LOCAL_FILES 使用相同的 Locale 排序规则，避免 comm 报错
           echo "获取远程文件列表..."
-          REMOTE_FILES=$(ssh $SSH_OPTS $SSH_USER@$HOST "find $SSH_REMOTE_PATH -type f -print 2>/dev/null | sed 's|^$SSH_REMOTE_PATH/||' | sort" || echo "")
+          REMOTE_FILES=$(ssh $SSH_OPTS $SSH_USER@$HOST "find $SSH_REMOTE_PATH -type f -print" 2>/dev/null | sed "s|^$SSH_REMOTE_PATH/||" | sort)
 
           # 3. 计算需要删除的文件（远程有，本地没有）
           echo "计算需要删除的文件..."

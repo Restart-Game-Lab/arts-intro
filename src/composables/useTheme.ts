@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useViewTransition } from '@/composables/useViewTransition'
 import { setTheme, setColorScheme } from 'mdui'
 
-export type ThemeMode = 'light' | 'dark' | 'auto'
+export type ThemeMode = 'light' | 'dark'
 
 /**
  * 内部 Pinia Store，用于持久化和响应式同步
@@ -11,7 +11,7 @@ export type ThemeMode = 'light' | 'dark' | 'auto'
  */
 const useThemeStore = defineStore('arts-theme-store', () => {
   // 使用 ref 作为单一真实数据源，确保响应式
-  const theme = ref<ThemeMode>((localStorage.getItem('theme') as ThemeMode) || 'auto')
+  const theme = ref<ThemeMode>((localStorage.getItem('theme') as ThemeMode) || 'light')
 
   // 3. 从环境变量读取默认主色调，如果未配置则回退到蓝色
   const envColor = import.meta.env.VITE_APP_PRIMARY_COLOR
@@ -41,12 +41,7 @@ export function useTheme() {
 
   function toggleThemeLogic() {
     const current = store.theme
-    if (current === 'auto') {
-      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      store.theme = isDark ? 'light' : 'dark'
-    } else {
-      store.theme = current === 'dark' ? 'light' : 'dark'
-    }
+    store.theme = current === 'dark' ? 'light' : 'dark'
   }
 
   const themeIcon = computed(() => {
@@ -55,8 +50,6 @@ export function useTheme() {
         return 'light-mode'
       case 'dark':
         return 'dark-mode'
-      default:
-        return 'brightness-auto'
     }
   })
 
@@ -66,8 +59,6 @@ export function useTheme() {
         return '浅色模式'
       case 'dark':
         return '深色模式'
-      default:
-        return '跟随系统'
     }
   })
 

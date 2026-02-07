@@ -9,6 +9,7 @@ const copyright = import.meta.env.VITE_APP_COPYRIGHT
 const icp = import.meta.env.VITE_APP_ICP_LICENSE
 const mps = import.meta.env.VITE_APP_MPS_LICENSE
 const gitRepo = import.meta.env.VITE_APP_GIT_REPO
+const commitHash = __COMMIT_HASH__
 
 usePageTitle('成员介绍', appName)
 </script>
@@ -32,7 +33,7 @@ usePageTitle('成员介绍', appName)
     </mdui-layout-main>
 
     <FooterBar :copyright-name="copyright" :icp-license="icp" :mps-license="mps" :git-repo="gitRepo"
-      style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;" />
+      :commit-hash="commitHash" style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;" />
   </mdui-layout>
 </template>
 

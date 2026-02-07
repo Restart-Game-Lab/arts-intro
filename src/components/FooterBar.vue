@@ -51,16 +51,17 @@ interface FooterProps {
   icpLicense?: string
   mpsLicense?: string
   gitRepo?: string
+  commitHash?: string
 }
 
 const props = defineProps<FooterProps>()
 
 const currentYear = computed(() => new Date().getFullYear())
 const MpsCode = computed(() => props.mpsLicense?.replace(/\D/g, ''))
-const commitHash = __COMMIT_HASH__
+const commitHash = computed(() => props.commitHash || 'unknown')
 const commitUrl = computed(() => {
   if (!props.gitRepo) return '#'
-  return `${props.gitRepo}/commit/${commitHash}`
+  return `${props.gitRepo}/commit/${commitHash.value}`
 })
 </script>
 

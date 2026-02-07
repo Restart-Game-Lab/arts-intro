@@ -3,6 +3,7 @@ import HeaderBar from '@/components/HeaderBar.vue'
 import FooterBar from '@/components/FooterBar.vue'
 import StudioLogo from '@/components/StudioLogo.vue'
 import { usePageTitle } from '@/composables/usePageTitle'
+import { navItems } from '@/router'
 
 const appName = import.meta.env.VITE_APP_NAME
 const copyright = import.meta.env.VITE_APP_COPYRIGHT
@@ -15,7 +16,8 @@ usePageTitle('首页', appName)
 
 <template>
   <mdui-layout full-height style="min-height: 100vh; overflow: hidden;">
-    <HeaderBar :title="appName" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;" />
+    <HeaderBar :title="appName" :nav-items="navItems"
+      style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;" />
     <mdui-layout-main class="main-content">
       <div class="center-container">
         <!-- Studio Name Animation -->

@@ -1,59 +1,40 @@
 <script setup lang="ts">
-import HeaderBar from '@/components/HeaderBar.vue'
-import FooterBar from '@/components/FooterBar.vue'
 import StudioLogo from '@/components/StudioLogo.vue'
 import { usePageTitle } from '@/composables/usePageTitle'
-import { navItems } from '@/router'
 import { useAppStore } from '@/stores/app'
 
 const appStore = useAppStore()
 const appName = import.meta.env.VITE_APP_NAME
-const copyright = import.meta.env.VITE_APP_COPYRIGHT
-const icp = import.meta.env.VITE_APP_ICP_LICENSE
-const mps = import.meta.env.VITE_APP_MPS_LICENSE
-const gitRepo = import.meta.env.VITE_APP_GIT_REPO
-const commitHash = __COMMIT_HASH__
 
 usePageTitle('首页', appName)
 </script>
 
 <template>
-  <mdui-layout full-height style="min-height: 100vh; overflow: hidden;">
-    <HeaderBar :title="appName" :nav-items="navItems"
-      style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;" />
-    <mdui-layout-main class="main-content">
-      <div class="center-container">
-        <!-- Studio Name Animation -->
-        <StudioLogo class="studio-logo" />
+  <div class="center-container">
+    <!-- Studio Name Animation -->
+    <StudioLogo class="studio-logo" />
 
-        <div class="slogan-container">
-          <p class="slogan-text" :class="{ 'played': appStore.logoAnimationPlayed }">为了我们的幻想乡</p>
-        </div>
-      </div>
-    </mdui-layout-main>
-    <FooterBar :copyright-name="copyright" :icp-license="icp" :mps-license="mps" :git-repo="gitRepo"
-      :commit-hash="commitHash" style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;" />
-  </mdui-layout>
+    <div class="slogan-container">
+      <p class="slogan-text" :class="{ 'played': appStore.logoAnimationPlayed }">为了我们的幻想乡</p>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="css">
-.main-content {
-  height: 100vh;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
 /* Force HMR update */
 .center-container {
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 3rem;
+  /* Prevent scrolling on main page if desired, or let it scroll if content overflows */
+  overflow: hidden;
+  padding-top: 64px;
+  padding-bottom: 112px;
+  box-sizing: border-box;
 }
 
 .slogan-text {

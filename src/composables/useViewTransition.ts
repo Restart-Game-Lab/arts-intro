@@ -39,6 +39,8 @@ export function useViewTransition(callback: () => void | Promise<void>) {
         pseudoElement: '::view-transition-new(root)',
       },
     )
+
+    return transition
   }
 
   return {

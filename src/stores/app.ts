@@ -9,6 +9,7 @@ import { ref } from 'vue'
 export const useAppStore = defineStore('app', () => {
   const themeData = useTheme()
   const logoAnimationPlayed = ref(false)
+  const isViewTransitioning = ref(false)
 
   const setLogoAnimationPlayed = () => {
     logoAnimationPlayed.value = true
@@ -17,6 +18,7 @@ export const useAppStore = defineStore('app', () => {
   return {
     ...themeData,
     logoAnimationPlayed,
+    isViewTransitioning,
     setLogoAnimationPlayed,
   }
 })

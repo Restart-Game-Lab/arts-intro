@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useTheme } from '@/composables/useTheme'
+import { ref } from 'vue'
 
 /**
  * 此时 AppStore 可以作为一个集成层
@@ -7,8 +8,15 @@ import { useTheme } from '@/composables/useTheme'
  */
 export const useAppStore = defineStore('app', () => {
   const themeData = useTheme()
+  const logoAnimationPlayed = ref(false)
+
+  const setLogoAnimationPlayed = () => {
+    logoAnimationPlayed.value = true
+  }
 
   return {
     ...themeData,
+    logoAnimationPlayed,
+    setLogoAnimationPlayed,
   }
 })

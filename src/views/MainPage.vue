@@ -4,12 +4,15 @@ import FooterBar from '@/components/FooterBar.vue'
 import StudioLogo from '@/components/StudioLogo.vue'
 import { usePageTitle } from '@/composables/usePageTitle'
 import { navItems } from '@/router'
+import { useAppStore } from '@/stores/app'
 
+const appStore = useAppStore()
 const appName = import.meta.env.VITE_APP_NAME
 const copyright = import.meta.env.VITE_APP_COPYRIGHT
 const icp = import.meta.env.VITE_APP_ICP_LICENSE
 const mps = import.meta.env.VITE_APP_MPS_LICENSE
 const gitRepo = import.meta.env.VITE_APP_GIT_REPO
+const commitHash = __COMMIT_HASH__
 
 usePageTitle('首页', appName)
 </script>
@@ -24,12 +27,12 @@ usePageTitle('首页', appName)
         <StudioLogo class="studio-logo" />
 
         <div class="slogan-container">
-          <p class="slogan-text">为了我们的幻想乡</p>
+          <p class="slogan-text" :class="{ 'played': appStore.logoAnimationPlayed }">为了我们的幻想乡</p>
         </div>
       </div>
     </mdui-layout-main>
     <FooterBar :copyright-name="copyright" :icp-license="icp" :mps-license="mps" :git-repo="gitRepo"
-      style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;" />
+      :commit-hash="commitHash" style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;" />
   </mdui-layout>
 </template>
 
@@ -63,8 +66,15 @@ usePageTitle('首页', appName)
   text-align: center;
 
   opacity: 0;
-  /* Animation duration tailored to SVG draw time (~9s in full) */
-  animation: fadeIn 1.5s ease-out 9.5s forwards;
+  /* Animation duration tailored to SVG draw time (~3.8s in full) */
+  animation: fadeIn 1.5s ease-out 3.8s forwards;
+  will-change: opacity, transform;
+}
+
+.slogan-text.played {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 @keyframes fadeIn {

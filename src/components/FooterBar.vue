@@ -17,7 +17,7 @@
           <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
             {{ props.icpLicense }}
           </a>
-          <a v-if="props.mpsLicense" :href="`https://beian.mps.gov.cn/#/query/webSearch?code=${MpsCode}`"
+          <a v-if="props.mpsLicense" :href="`https://beian.mps.gov.cn/#/query/webSearch?code=${mpsCode}`"
             target="_blank" rel="noreferrer">
             {{ props.mpsLicense }}
           </a>
@@ -57,7 +57,7 @@ interface FooterProps {
 const props = defineProps<FooterProps>()
 
 const currentYear = computed(() => new Date().getFullYear())
-const MpsCode = computed(() => props.mpsLicense?.replace(/\D/g, ''))
+const mpsCode = computed(() => props.mpsLicense?.replace(/\D/g, ''))
 const commitHash = computed(() => props.commitHash || 'unknown')
 const commitUrl = computed(() => {
   if (!props.gitRepo) return '#'

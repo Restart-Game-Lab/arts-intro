@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useTheme } from '@/composables/useTheme'
 import { useRouter, useRoute } from 'vue-router'
-import { useViewTransition } from '@/composables/useViewTransition'
 import { computed } from 'vue'
 import '@mdui/icons/light-mode.js';
 import '@mdui/icons/dark-mode.js';
@@ -23,11 +22,9 @@ const isActive = (path: string) => {
     return currentPath.value === path
 }
 
-const navigate = (to: string, event: MouseEvent) => {
-    const { startTransition } = useViewTransition(async () => {
-        await router.push(to)
-    })
-    startTransition(event)
+const navigate = async (to: string) => {
+    if (to === currentPath.value) return
+    await router.push(to)
 }
 </script>
 
@@ -35,7 +32,7 @@ const navigate = (to: string, event: MouseEvent) => {
     <mdui-top-app-bar class="header">
         <div class="header-layout">
             <div class="header-left">
-                <mdui-top-app-bar-title class="logo-title" @click="navigate('/', $event)">
+                <mdui-top-app-bar-title class="logo-title" @click="navigate('/')">
                     {{ props.title }}
                 </mdui-top-app-bar-title>
             </div>
@@ -43,7 +40,7 @@ const navigate = (to: string, event: MouseEvent) => {
             <div class="header-center">
                 <div class="nav-links">
                     <mdui-button v-for="item in props.navItems" :key="item.path" variant="text" class="nav-btn"
-                        :class="{ 'active': isActive(item.path) }" @click="navigate(item.path, $event)">{{ item.name
+                        :class="{ 'active': isActive(item.path) }" @click="navigate(item.path)">{{ item.name
                         }}</mdui-button>
                 </div>
             </div>

@@ -24,9 +24,7 @@ usePageTitle('成员介绍', appName)
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  padding-top: calc(64px + 2rem);
-  padding-bottom: calc(112px + 2rem);
-  min-height: 100vh;
+  min-height: 100%;
   box-sizing: border-box;
 }
 

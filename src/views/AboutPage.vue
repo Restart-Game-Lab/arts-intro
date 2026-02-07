@@ -12,7 +12,8 @@ usePageTitle('关于我们', appName)
     <p class="page-description">关于 Restart Game Lab 的故事。</p>
 
     <div class="about-content" style="margin-top: 2rem;">
-      <p>Restart Game Lab 致力于...</p>
+      <p>Restart Game Lab 致力于...xxxxxxxxxxxx</p>
+      <br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx<br />xxxxxxxxxxxx
     </div>
   </div>
 </template>
@@ -22,9 +23,7 @@ usePageTitle('关于我们', appName)
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  padding-top: calc(64px + 2rem);
-  padding-bottom: calc(112px + 2rem);
-  min-height: 100vh;
+  min-height: 100%;
   box-sizing: border-box;
 }
 

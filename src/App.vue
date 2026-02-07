@@ -33,9 +33,11 @@ const commitHash = __COMMIT_HASH__
 </script>
 
 <template>
-  <mdui-layout full-height style="min-height: 100vh;">
-    <HeaderBar :title="appName" :nav-items="navItems"
-      style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; view-transition-name: page-header;" />
+  <mdui-layout full-height style="height: 100vh; overflow: hidden; display: flex; flex-direction: column;">
+    <div style="flex-shrink: 0; z-index: 2000; position: relative;">
+      <HeaderBar :title="appName" :nav-items="navItems"
+        style="view-transition-name: page-header; position: relative !important; width: 100%;" />
+    </div>
 
     <mdui-layout-main class="main-content">
       <router-view v-slot="{ Component }">
@@ -45,17 +47,22 @@ const commitHash = __COMMIT_HASH__
       </router-view>
     </mdui-layout-main>
 
-    <FooterBar :copyright-name="copyright" :icp-license="icp" :mps-license="mps" :git-repo="gitRepo"
-      :commit-hash="commitHash"
-      style="position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000; view-transition-name: page-footer;" />
+    <div style="flex-shrink: 0; z-index: 2000; position: relative;">
+      <FooterBar :copyright-name="copyright" :icp-license="icp" :mps-license="mps" :git-repo="gitRepo"
+        :commit-hash="commitHash"
+        style="view-transition-name: page-footer; position: relative !important; width: 100%; top: auto; bottom: auto; left: auto; right: auto;" />
+    </div>
   </mdui-layout>
 </template>
 
 <style scoped>
 .main-content {
-  height: 100%;
   width: 100%;
   box-sizing: border-box;
   overflow-y: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  min-height: 0;
 }
 </style>

@@ -26,8 +26,8 @@ export interface AnalyticsOptions {
 }
 
 export function useAnalytics(options?: AnalyticsOptions) {
-  const clarityId = options?.clarityId || import.meta.env.VITE_APP_MICROSOFT_CLARITY_ID
-  const gaId = options?.gaId || import.meta.env.VITE_APP_GOOGLE_ANALYTICS_ID
+  const clarityId = options?.clarityId
+  const gaId = options?.gaId
 
   onMounted(() => {
     // 延迟异步加载所有分析脚本，避免阻塞页面渲染

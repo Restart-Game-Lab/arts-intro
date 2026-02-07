@@ -59,7 +59,7 @@ When generating commit messages, you **MUST** follow the project's specific conv
 - `[Merge]`: Merge branch code
 - `[Del]`: Deleting code or files
 
-**Example**: `[Add] Implement user login composable`
+**Example**: `[Add] Implement user login composable`, `[Merge] Merge feat/login into develop`
 
 ## Git Branching Workflow
 
@@ -69,6 +69,7 @@ You **MUST** adhere to the strict project workflow using only the following bran
 - **Work Branches**:
   - `feat/NAME`: For new features (branch off `develop`, merge to `develop`).
   - `fix/NAME`: For bug fixes (branch off `develop`, merge to `develop`).
+  - `ref/NAME`: For refactoring/optimizations (branch off `develop`, merge to `develop`).
 
 **Workflow Rules**:
 
@@ -77,6 +78,7 @@ You **MUST** adhere to the strict project workflow using only the following bran
     - **Pushing**: Once a feature/fix is ready locally, ALWAYS push the branch to remote to ensure traceability: `git push -u origin TYPE/NAME`.
     - **Merging**:
       - Use **Non-Fast-Forward Merge** locally to preserve branch history graph: `git checkout develop; git merge --no-ff TYPE/NAME`.
+      - **Merge Commit Message**: Must follow the convention `[Merge] Merge TYPE/NAME into develop`.
       - Push updated `develop`: `git push origin develop`.
       - _Optionally clean up local branch, but consider keeping remote branch._
 
@@ -85,11 +87,12 @@ You **MUST** adhere to the strict project workflow using only the following bran
     - **Development Phase**: Perform all edits, builds, and verifies on this feature branch. **DO NOT COMMOT, MERGE, OR PUSH** unless explicitly instructed by the user (e.g., "Submit code", "Merge branch").
     - **Submission Phase**: Only when the user commands to finalize:
       1.  Run build verification.
-      2.  Git add & commit (using convention).
-      3.  Push feature branch to origin (Backup/Traceability).
-      4.  Merge to `develop` with `--no-ff` (Preserve History).
+      2.  Git add & co/fix/ref branch to origin (Backup/Traceability).
+      4.  Merge to `develop` with `--no-ff` and use `[Merge]` commit message.
       5.  Push `develop` to origin.
 
+3.  **Strict Compliance**:
+    - These rules apply strictly to BOTH **AI (Copilot)** and **Human** developers.
 3.  **Forbidden Actions**:
     - Never commit directly to `master`.
     - Never commit directly to `develop` (Always merge into it).

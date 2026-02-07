@@ -1,0 +1,16 @@
+:root {
+  /* 在浅色模式下强制背景为纯白色 */
+  --mdui-color-background-light: 255, 255, 255;
+  --mdui-color-surface-light: 255, 255, 255;
+  --mdui-color-surface-container-light: 255, 255, 255;
+  --mdui-color-surface-container-low-light: 255, 255, 255;
+  --mdui-color-surface-container-lowest-light: 255, 255, 255;
+}
+
+body {
+  background-color: rgb(var(--mdui-color-background));
+  color: rgb(var(--mdui-color-on-background));
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

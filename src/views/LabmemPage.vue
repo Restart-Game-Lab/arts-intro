@@ -2,6 +2,7 @@
 import HeaderBar from '@/components/HeaderBar.vue'
 import FooterBar from '@/components/FooterBar.vue'
 import { usePageTitle } from '@/composables/usePageTitle'
+import { navItems } from '@/router'
 
 const appName = import.meta.env.VITE_APP_NAME
 const copyright = import.meta.env.VITE_APP_COPYRIGHT
@@ -14,13 +15,14 @@ usePageTitle('成员介绍', appName)
 
 <template>
   <mdui-layout full-height>
-    <HeaderBar :title="appName" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;" />
-    
+    <HeaderBar :title="appName" :nav-items="navItems"
+      style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;" />
+
     <mdui-layout-main class="main-content">
       <div class="content-container">
         <h1 class="page-title">成员介绍</h1>
         <p class="page-description">认识一下 Restart Game Lab 的所有成员。</p>
-        
+
         <mdui-list style="margin-top: 2rem; max-width: 600px;">
           <mdui-list-item headline="Member Name" description="Role / Title">
             <mdui-avatar slot="icon">A</mdui-avatar>

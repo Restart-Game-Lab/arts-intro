@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useTheme } from '@/composables/useTheme'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useViewTransition } from '@/composables/useViewTransition'
+import { computed } from 'vue'
 import '@mdui/icons/light-mode.js';
 import '@mdui/icons/dark-mode.js';
 import '@mdui/icons/brightness-auto.js';
@@ -9,10 +10,18 @@ import '@mdui/icons/account-circle.js';
 
 const props = defineProps<{
     title?: string
+    navItems?: { name: string, path: string }[]
 }>()
 
 const { themeIcon, toggleTheme } = useTheme()
 const router = useRouter()
+const route = useRoute()
+
+const currentPath = computed(() => route.path)
+
+const isActive = (path: string) => {
+    return currentPath.value === path
+}
 
 const navigate = (to: string, event: MouseEvent) => {
     const { startTransition } = useViewTransition(async () => {
@@ -29,16 +38,14 @@ const navigate = (to: string, event: MouseEvent) => {
                 <mdui-top-app-bar-title class="logo-title" @click="navigate('/', $event)">
                     {{ props.title }}
                 </mdui-top-app-bar-title>
-                <div class="nav-links">
-                    <mdui-button variant="text" @click="navigate('/projects', $event)">项目</mdui-button>
-                    <mdui-button variant="text" @click="navigate('/gadgets', $event)">应用</mdui-button>
-                    <mdui-button variant="text" @click="navigate('/labmem', $event)">成员</mdui-button>
-                    <mdui-button variant="text" @click="navigate('/about', $event)">关于</mdui-button>
-                </div>
             </div>
 
             <div class="header-center">
-                <!-- Reserved for future use -->
+                <div class="nav-links">
+                    <mdui-button v-for="item in props.navItems" :key="item.path" variant="text" class="nav-btn"
+                        :class="{ 'active': isActive(item.path) }" @click="navigate(item.path, $event)">{{ item.name
+                        }}</mdui-button>
+                </div>
             </div>
 
             <div class="header-right">
@@ -70,28 +77,35 @@ const navigate = (to: string, event: MouseEvent) => {
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    /* Flow starts from left */
     height: 100%;
     position: relative;
 }
 
-.header-left,
+.header-left {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.header-center {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding-left: 1.5rem;
+    /* Space between logo and buttons */
+}
+
 .header-right {
     position: absolute;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-}
-
-.header-left {
-    left: 0;
-    justify-content: flex-start;
-}
-
-.header-right {
-    right: 0;
-    justify-content: flex-end;
+    gap: 0.5rem;
+    /* Increase gap between right buttons */
 }
 
 .logo-title {
@@ -105,7 +119,20 @@ const navigate = (to: string, event: MouseEvent) => {
 
 .nav-links {
     display: flex;
-    gap: 0.25rem;
+    gap: 1.5rem;
+}
+
+.nav-btn {
+    --mdui-color-primary: var(--mdui-color-on-surface);
+    border-radius: 8px;
+    /* Standard rounded rectangle */
+    transition: background-color 0.2s;
+    /* Smooth transition */
+}
+
+.nav-btn.active {
+    background-color: rgba(var(--mdui-color-on-surface), 0.08);
+    /* Light gray background */
 }
 
 mdui-top-app-bar-title {

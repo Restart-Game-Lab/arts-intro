@@ -2,6 +2,7 @@
 import HeaderBar from '@/components/HeaderBar.vue'
 import FooterBar from '@/components/FooterBar.vue'
 import { usePageTitle } from '@/composables/usePageTitle'
+import { navItems } from '@/router'
 
 const appName = import.meta.env.VITE_APP_NAME
 const copyright = import.meta.env.VITE_APP_COPYRIGHT
@@ -14,14 +15,16 @@ usePageTitle('小应用', appName)
 
 <template>
   <mdui-layout full-height>
-    <HeaderBar :title="appName" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;" />
-    
+    <HeaderBar :title="appName" :nav-items="navItems"
+      style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;" />
+
     <mdui-layout-main class="main-content">
       <div class="content-container">
         <h1 class="page-title">小应用</h1>
         <p class="page-description">这里包含了一些实用的小工具和实验性质的应用。</p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 2rem;">
+
+        <div
+          style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 2rem;">
           <mdui-card variant="elevated" clickable style="padding: 1rem;">
             <h3>示例应用</h3>
             <p>这是一个应用占位符。</p>

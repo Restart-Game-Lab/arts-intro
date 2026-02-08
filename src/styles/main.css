@@ -18,7 +18,9 @@ body {
 /* Page Transition Animation */
 .fade-slide-enter-active,
 .fade-slide-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .fade-slide-enter-from {
@@ -31,3 +33,39 @@ body {
   transform: translateY(-10px);
 }
 
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(var(--mdui-color-surface-container-low), 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--mdui-color-outline), 0.6);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--mdui-color-outline), 0.9);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(var(--mdui-color-primary), 0.7);
+}
+
+/* Hide scrollbar buttons (arrows) */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--mdui-color-outline), 0.6)
+    rgba(var(--mdui-color-surface-container-low), 0.5);
+}

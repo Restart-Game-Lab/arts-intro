@@ -23,18 +23,13 @@ usePageTitle('首页', appName)
 <style scoped lang="css">
 /* Force HMR update */
 .center-container {
-  min-height: 100vh;
+  min-height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 3rem;
-  /* Prevent scrolling on main page if desired, or let it scroll if content overflows */
-  overflow: hidden;
-  padding-top: 64px;
-  padding-bottom: 112px;
-  box-sizing: border-box;
 }
 
 .slogan-text {

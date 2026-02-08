@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
-import fs from 'node:fs'
+// import fs from 'node:fs'
 import { execSync } from 'node:child_process'
 
 import { defineConfig } from 'vite'
@@ -42,10 +42,10 @@ export default defineConfig({
   },
   server: {
     open: false,
-    https: {
-      key: fs.readFileSync('./cert/server.key'),
-      cert: fs.readFileSync('./cert/fullchain.crt'),
-    },
+    // https: {
+    //   key: fs.readFileSync('./cert/server.key'),
+    //   cert: fs.readFileSync('./cert/fullchain.crt'),
+    // },
     host: '0.0.0.0',
     cors: true,
     // allowedHosts: ['test.arts'],

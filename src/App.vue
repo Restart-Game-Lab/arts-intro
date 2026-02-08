@@ -65,4 +65,9 @@ const commitHash = __COMMIT_HASH__
   flex-basis: 0;
   min-height: 0;
 }
+
+/* 防止页面切换时滚动条引起的布局跳动 */
+.mdui-layout {
+  scrollbar-gutter: stable;
+}
 </style>

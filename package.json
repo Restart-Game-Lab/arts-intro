@@ -10,7 +10,7 @@
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "build-only": "vite build",
+    "build-only": "vite-ssg build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache",
     "format": "prettier --write src/"
@@ -37,6 +37,7 @@
     "typescript": "~5.9.0",
     "vite": "^7.1.11",
     "vite-plugin-vue-devtools": "^8.0.3",
+    "vite-ssg": "^28.3.0",
     "vue-tsc": "^3.1.1"
   }
 }

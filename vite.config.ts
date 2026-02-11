@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
-// import fs from 'node:fs'
+import fs from 'node:fs'
+import path from 'node:path'
 import { execSync } from 'node:child_process'
 
 import { defineConfig } from 'vite'
@@ -49,5 +50,27 @@ export default defineConfig({
     host: '0.0.0.0',
     cors: true,
     // allowedHosts: ['test.arts'],
+  },
+  // @ts-expect-error vite-ssg options
+  ssgOptions: {
+    script: 'async',
+    formatting: 'minify',
+    onFinished() {
+      const root = process.cwd()
+      const distDir = path.resolve(root, 'dist')
+      if (!fs.existsSync(distDir)) return
+
+      const files = fs.readdirSync(distDir)
+      files.forEach((file) => {
+        if (file.endsWith('.html') && file !== 'index.html') {
+          const name = file.replace('.html', '')
+          const targetDir = path.join(distDir, name)
+          if (!fs.existsSync(targetDir)) {
+            fs.mkdirSync(targetDir)
+          }
+          fs.renameSync(path.join(distDir, file), path.join(targetDir, 'index.html'))
+        }
+      })
+    },
   },
 })

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { type RouteRecordRaw } from 'vue-router'
 
 export const navItems = [
   { name: '项目', path: '/projects' },
@@ -7,36 +7,32 @@ export const navItems = [
   { name: '关于', path: '/about' },
 ]
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      // Lazy load the component
-      component: () => import('@/views/MainPage.vue'),
-    },
-    {
-      path: '/projects',
-      name: 'projects',
-      component: () => import('@/views/ProjectsPage.vue'),
-    },
-    {
-      path: '/gadgets',
-      name: 'gadgets',
-      component: () => import('@/views/GadgetsPage.vue'),
-    },
-    {
-      path: '/labmems',
-      name: 'members',
-      component: () => import('@/views/LabmemPage.vue'),
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('@/views/AboutPage.vue'),
-    },
-  ],
-})
+export const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    name: 'home',
+    // Lazy load the component
+    component: () => import('@/views/MainPage.vue'),
+  },
+  {
+    path: '/projects',
+    name: 'projects',
+    component: () => import('@/views/ProjectsPage.vue'),
+  },
+  {
+    path: '/gadgets',
+    name: 'gadgets',
+    component: () => import('@/views/GadgetsPage.vue'),
+  },
+  {
+    path: '/labmems',
+    name: 'members',
+    component: () => import('@/views/LabmemPage.vue'),
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('@/views/AboutPage.vue'),
+  },
+]
 
-export default router

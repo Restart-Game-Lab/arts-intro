@@ -12,7 +12,9 @@ export function usePageTitle(title: MaybeRefOrGetter<string>, appName: string = 
     () => toValue(title),
 
     (newTitle) => {
-      document.title = newTitle ? (baseTitle ? `${newTitle} | ${baseTitle}` : newTitle) : baseTitle
+      if (typeof document !== 'undefined') {
+        document.title = newTitle ? (baseTitle ? `${newTitle} | ${baseTitle}` : newTitle) : baseTitle
+      }
     },
     { immediate: true },
   )

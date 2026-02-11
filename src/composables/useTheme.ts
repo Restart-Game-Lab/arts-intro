@@ -10,8 +10,13 @@ export type ThemeMode = 'light' | 'dark'
  * 包含在 Composable 文件中是为了使其作为一个“可复用模块”整体迁移
  */
 const useThemeStore = defineStore('arts-theme-store', () => {
+  // Check for window/localStorage availability
+  const isClient = typeof window !== 'undefined'
+  
   // 使用 ref 作为单一真实数据源，确保响应式
-  const theme = ref<ThemeMode>((localStorage.getItem('theme') as ThemeMode) || 'light')
+  const theme = ref<ThemeMode>(
+    (isClient && localStorage.getItem('theme') as ThemeMode) || 'light'
+  )
 
   // 默认主色调，默认为蓝色
   const primaryColor = ref('#2196F3')
@@ -19,6 +24,7 @@ const useThemeStore = defineStore('arts-theme-store', () => {
   // 4. 响应式监听：处理副作用（DOM 操作和持久化）
   // watchEffect 会自动追踪依赖，并在组件卸载时（如果是组件内调用）自动停止，但在 Store 中会一直保持活跃，这是符合预期的全局行为
   watchEffect(() => {
+    if (!isClient) return
     setTheme(theme.value)
     setColorScheme(primaryColor.value)
     localStorage.setItem('theme', theme.value)

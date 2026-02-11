@@ -58,11 +58,6 @@ body {
   background: rgba(var(--mdui-color-primary), 0.7);
 }
 
-/* Hide scrollbar buttons (arrows) */
-::-webkit-scrollbar-button {
-  display: none;
-}
-
 /* Firefox Scrollbar */
 * {
   scrollbar-width: thin;

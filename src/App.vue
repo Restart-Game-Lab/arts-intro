@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { useAppStore } from '@/stores/app'
+import { useEnvStore } from '@/stores/env'
 import { useAnalytics } from '@/composables/useAnalytics'
 import { useTheme } from '@/composables/useTheme'
 import HeaderBar from '@/components/HeaderBar.vue'
@@ -13,22 +14,25 @@ import '@/styles/main.css'
 // 初始化应用 Store
 useAppStore()
 
+// 初始化环境变量 Store
+const env = useEnvStore()
+
 // 初始化主题 (使用环境变量配置)
 useTheme({
-  defaultPrimaryColor: import.meta.env.VITE_APP_PRIMARY_COLOR
+  defaultPrimaryColor: env.primaryColor
 })
 
 // 初始化分析工具 (Clarity, Google Analytics)
 useAnalytics({
-  clarityId: import.meta.env.VITE_APP_MICROSOFT_CLARITY_ID,
-  gaId: import.meta.env.VITE_APP_GOOGLE_ANALYTICS_ID
+  clarityId: env.microsoftClarityId,
+  gaId: env.googleAnalyticsId
 })
 
-const appName = import.meta.env.VITE_APP_NAME
-const copyright = import.meta.env.VITE_APP_COPYRIGHT
-const icp = import.meta.env.VITE_APP_ICP_LICENSE
-const mps = import.meta.env.VITE_APP_MPS_LICENSE
-const gitRepo = import.meta.env.VITE_APP_GIT_REPO
+const appName = env.appName
+const copyright = env.copyright
+const icp = env.icpLicense
+const mps = env.mpsLicense
+const gitRepo = env.gitRepo
 const commitHash = __COMMIT_HASH__
 </script>
 

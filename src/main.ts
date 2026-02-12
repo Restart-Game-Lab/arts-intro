@@ -3,11 +3,12 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import { routes } from './router'
+import { baseUrl } from './stores/env'
 import './styles/view-transition.css'
 
 export const createApp = ViteSSG(
   App,
-  { routes, base: import.meta.env.BASE_URL },
+  { routes, base: baseUrl },
   ({ app }) => {
     app.use(createPinia())
   },

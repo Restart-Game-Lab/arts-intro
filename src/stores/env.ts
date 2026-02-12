@@ -36,3 +36,6 @@ export const useEnvStore = defineStore('env', () => {
     primaryColor,
   }
 })
+
+// 导出BASE_URL作为常量（非响应式）
+export const baseUrl = import.meta.env.BASE_URL

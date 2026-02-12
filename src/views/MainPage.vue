@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import StudioLogo from '@/components/StudioLogo.vue'
+import { useEnvStore } from '@/stores/env'
 import { usePageTitle } from '@/composables/usePageTitle'
 import { useLogoAnimation } from '@/composables/useLogoAnimation'
 
+const envStore = useEnvStore()
 const { logoAnimationPlayed } = useLogoAnimation()
-const appName = import.meta.env.VITE_APP_NAME
+const appName = envStore.appName
 
 usePageTitle('首页', appName)
 </script>

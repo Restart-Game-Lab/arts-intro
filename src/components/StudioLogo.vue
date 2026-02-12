@@ -1,30 +1,30 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount } from 'vue'
-import { useAppStore } from '@/stores/app'
+import { useLogoAnimation } from '@/composables/useLogoAnimation'
 
-const appStore = useAppStore()
+const { logoAnimationPlayed, setLogoAnimationPlayed } = useLogoAnimation()
 let timer: ReturnType<typeof setTimeout>
 
 onMounted(() => {
-    if (!appStore.logoAnimationPlayed) {
+    if (!logoAnimationPlayed.value) {
         // Animation max duration is roughly 3.8s + Slogan animation ~1.5s
         // We wait for both to finish before locking the state to avoid cutting off the slogan fade-in.
         timer = setTimeout(() => {
-            appStore.setLogoAnimationPlayed()
+            setLogoAnimationPlayed()
         }, 5500)
     }
 })
 
 onBeforeUnmount(() => {
     if (timer) clearTimeout(timer)
-    if (!appStore.logoAnimationPlayed) {
-        appStore.setLogoAnimationPlayed()
+    if (!logoAnimationPlayed.value) {
+        setLogoAnimationPlayed()
     }
 })
 </script>
 
 <template>
-    <svg class="studio-logo" :class="{ 'played': appStore.logoAnimationPlayed }" xmlns="http://www.w3.org/2000/svg"
+    <svg class="studio-logo" :class="{ 'played': logoAnimationPlayed }" xmlns="http://www.w3.org/2000/svg"
         width="100%" height="100%" viewBox="0 0 314 51">
         <foreignObject width="100%" height="100%">
             <div xmlns="http://www.w3.org/1999/xhtml"

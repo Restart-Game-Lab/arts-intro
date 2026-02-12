@@ -7,10 +7,13 @@ import '@mdui/icons/dark-mode.js';
 import '@mdui/icons/brightness-auto.js';
 import '@mdui/icons/account-circle.js';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     title?: string
     navItems?: { name: string, path: string }[]
-}>()
+    homePath?: string
+}>(), {
+    homePath: '/'
+})
 
 const { themeIcon, toggleTheme } = useTheme()
 const router = useRouter()
@@ -32,7 +35,7 @@ const navigate = async (to: string) => {
     <mdui-top-app-bar class="header">
         <div class="header-layout">
             <div class="header-left">
-                <mdui-top-app-bar-title class="logo-title" @click="navigate('/')">
+                <mdui-top-app-bar-title class="logo-title" @click="navigate(props.homePath)">
                     {{ props.title }}
                 </mdui-top-app-bar-title>
             </div>
@@ -46,11 +49,13 @@ const navigate = async (to: string) => {
             </div>
 
             <div class="header-right">
-                <mdui-tooltip content="用户中心">
-                    <mdui-button-icon href="https://babel.restart.org.cn">
-                        <mdui-icon-account-circle></mdui-icon-account-circle>
-                    </mdui-button-icon>
-                </mdui-tooltip>
+                <slot name="actions">
+                    <mdui-tooltip content="用户中心">
+                        <mdui-button-icon href="https://account.restart.org.cn">
+                            <mdui-icon-account-circle></mdui-icon-account-circle>
+                        </mdui-button-icon>
+                    </mdui-tooltip>
+                </slot>
 
                 <mdui-tooltip :content="`切换主题`">
                     <mdui-button-icon @click="toggleTheme">

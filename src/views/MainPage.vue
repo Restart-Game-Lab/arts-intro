@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import StudioLogo from '@/components/StudioLogo.vue'
+import { useEnvStore } from '@/stores/env'
 import { usePageTitle } from '@/composables/usePageTitle'
-import { useAppStore } from '@/stores/app'
+import { useLogoAnimation } from '@/composables/useLogoAnimation'
 
-const appStore = useAppStore()
-const appName = import.meta.env.VITE_APP_NAME
+const envStore = useEnvStore()
+const { logoAnimationPlayed } = useLogoAnimation()
+const appName = envStore.appName
 
 usePageTitle('首页', appName)
 </script>
@@ -15,7 +17,7 @@ usePageTitle('首页', appName)
     <StudioLogo class="studio-logo" />
 
     <div class="slogan-container">
-      <p class="slogan-text" :class="{ 'played': appStore.logoAnimationPlayed }">为了我们的幻想乡</p>
+      <p class="slogan-text" :class="{ 'played': logoAnimationPlayed }">为了我们的幻想乡</p>
     </div>
   </div>
 </template>

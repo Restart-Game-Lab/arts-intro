@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useEnvStore } from '@/stores/env'
 import { usePageTitle } from '@/composables/usePageTitle'
 
-const appName = import.meta.env.VITE_APP_NAME
+const envStore = useEnvStore()
+const appName = envStore.appName
 
 usePageTitle('小应用', appName)
 </script>

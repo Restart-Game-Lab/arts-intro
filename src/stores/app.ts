@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useTheme } from '@/composables/useTheme'
+import { useLogoAnimation } from '@/composables/useLogoAnimation'
 import { ref } from 'vue'
 
 /**
@@ -8,12 +9,8 @@ import { ref } from 'vue'
  */
 export const useAppStore = defineStore('app', () => {
   const themeData = useTheme()
-  const logoAnimationPlayed = ref(false)
+  const { logoAnimationPlayed, setLogoAnimationPlayed } = useLogoAnimation()
   const isViewTransitioning = ref(false)
-
-  const setLogoAnimationPlayed = () => {
-    logoAnimationPlayed.value = true
-  }
 
   return {
     ...themeData,

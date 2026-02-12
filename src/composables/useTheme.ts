@@ -65,6 +65,8 @@ export function useTheme(options?: ThemeOptions) {
         return 'light-mode'
       case 'dark':
         return 'dark-mode'
+      default:
+        return 'dark-mode'
     }
   })
 
@@ -73,6 +75,8 @@ export function useTheme(options?: ThemeOptions) {
       case 'light':
         return '浅色模式'
       case 'dark':
+        return '深色模式'
+      default:
         return '深色模式'
     }
   })
